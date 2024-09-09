@@ -18,8 +18,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  //userList[3].body ?? ""
-
   Future<List<Welcome>> getPostApi() async {
     final data = await fetchData();
     return data;
@@ -40,15 +38,57 @@ class _HomePageState extends State<HomePage> {
                     if (!futuredATA.hasData) {
                       return Text('Loading');
                     } else if (futuredATA.hasData) {
-                      return ListView.builder(
+                      return InkWell(
+                        child: ListView.builder(
                           itemCount: futuredATA.data?.length ?? 0,
                           itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                Text(futuredATA.data![index].title.toString()),
-                              ],
+                            final item = futuredATA.data![index];
+
+                            return Card(
+                              elevation: 4,
+                              margin: const EdgeInsets.all(10),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.title.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      "ID: ${item.id.toString()}",
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      "Body: ${item.body.toString()}",
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      "User ID: ${item.userId.toString()}",
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.blueAccent,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             );
-                          });
+                          },
+                        ),
+                      );
                     } else {
                       return Text('Some error ');
                     }
